@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.layers import LSTM, Dense, Dropout, Input
 
 from get_data import download_data
 
@@ -78,7 +78,8 @@ class CryptoPricePredictor:
     def build_model(self):
         print("Building model...")
         self.model = Sequential()
-        self.model.add(LSTM(100, return_sequences=True, input_shape=(self.X_train.shape[1], 1)))
+        self.model.add(Input(shape=(self.X_train.shape[1], 1)))
+        self.model.add(LSTM(100, return_sequences=True))
         self.model.add(LSTM(100, return_sequences=False))
         self.model.add(Dense(25))
         self.model.add(Dense(1))
