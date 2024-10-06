@@ -1,6 +1,6 @@
-import yfinance as yf
-import pandas as pd
 import numpy as np
+import pandas as pd
+import yfinance as yf
 
 
 def download_data(crypto_symbol: str, start: str, end: str, interval: str = "1d") -> pd.DataFrame:
