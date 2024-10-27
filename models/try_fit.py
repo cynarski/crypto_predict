@@ -1,20 +1,32 @@
-from GRU import MyGRU
-
 import yfinance as yf
+import numpy as np
+from LSTM import MyLSTM
+from Prophet import MyProphet
+import matplotlib.pyplot as plt
 
+# df = yf.download('ETH-USD', start='2016-01-01', end='2021-12-31')
+data = yf.download('ETH-USD', start='2016-01-01', end='2021-12-31')
+# data = df[['Close']].values
 
-df = yf.download('ETH-USD', start='2019-01-01', end='2021-12-31')
+gru_model = MyProphet()
+gru_model.create_model()
+gru_model.fit(data)
 
-# Użyjemy tylko kolumny 'Close' jako cechy
-data = df[['Close']].values
-
-GRU = MyGRU()
-GRU.create_model()
-GRU.fit(data)
-
-test_data = yf.download('ETH-USD', start='2022-01-01', end='2022-03-31')
+test_data = yf.download('ETH-USD', start='2022-01-01', end='2022-07-31')
 actual_prices = test_data[['Close']].values
-predicted_prices = GRU.predict(actual_prices)
+length = len(actual_prices)
 
-# Wykres porównujący rzeczywiste i przewidywane ceny
-GRU.plot_predictions(actual=actual_prices, predicted=predicted_prices, dates=test_data.index, title='ETH Price Prediction (2022-01 to 2022-03)')
+# total_dataset = np.concatenate((data, actual_prices), axis=0)
+
+
+predicted_prices = gru_model.predict(periods=90)
+print(predicted_prices)
+
+plt.figure(figsize=(14,5))
+# plt.plot(actual_prices, color='red', label='Rzeczywiste ceny ETH (2022-01 do 2022-03)')
+plt.plot(predicted_prices, color='green', label='Przewidywane ceny ETH (2022-01 do 2022-03)')
+plt.title('Porównanie przewidywanych i rzeczywistych cen ETH od 2022-01 do 2022-03')
+plt.xlabel('Data')
+plt.ylabel('Cena ETH')
+plt.legend()
+plt.show()
