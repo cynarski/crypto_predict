@@ -10,6 +10,7 @@ class MyArima:
     def __init__(self, interval: int = 90) -> None:
         self.interval = interval
         self.model_fit = None
+        self.history = []
 
     @staticmethod
     def prepare_data(df):
@@ -32,8 +33,18 @@ class MyArima:
     def fit(self, df):
         train, _ = self.prepare_data(df)
         differenced = self.difference(train)
+        self.history = list(train)
         model = ARIMA(differenced, order=(5, 1, 0))
         self.model_fit = model.fit()
 
-    def predict(self):
-        pass
+    def predict(self, forecast_length, forecast_dates):
+        forecast = self.model_fit.predict(start=len(self.history), end=len(self.history) + forecast_length - 1)
+
+        predicted_results = []
+        for yhat in forecast:
+            inverted = self.inverse_difference(self.history, yhat)
+            self.history.append(inverted)
+            predicted_results.append(inverted)
+
+        predictions_df = pd.DataFrame(predicted_results, index=forecast_dates, columns=['Predicted'])
+        return predictions_df
