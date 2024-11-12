@@ -13,13 +13,13 @@ class MyMonteCarlo:
         self.best_simulation = None
 
     def fit(self, data):
-        data['LogReturns'] = np.log(data['Adj Close'] / data['Adj Close'].shift(1))
+        data['LogReturns'] = np.log(data['Close'] / data['Close'].shift(1))
         log_returns = data['LogReturns'].dropna()
         u = log_returns.mean()
         var = log_returns.var()
         self.drift = u - (0.5 * var)
         self.stdev = log_returns.std()
-        self.S0 = data['Adj Close'].iloc[-1]
+        self.S0 = data['Close'].iloc[-1]
 
     def predict(self, forecast_length, forecast_dates):
 
