@@ -28,7 +28,6 @@ class MyProphet:
         self.model.fit(data)
 
     def predict(self, periods):
-
         future_datas = self.model.make_future_dataframe(periods=periods, include_history=False)
         predictions = self.model.predict(future_datas)
         return predictions

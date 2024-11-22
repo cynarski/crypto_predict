@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Bitcoin (BTC)",
+        "image": "/assets/images/bitcoin-btc-logo.png"
+    },
+    {
+        "name": "Ethereum (ETH)",
+        "image": "/assets/images/ethereum-eth-logo.png"
+    },
+    {
+        "name": "Binance Coin (BNB)",
+        "image": "/assets/images/binance-coin-bnb-logo.png"
+    },
+    {
+        "name": "Cardano (ADA)",
+        "image": "/assets/images/cardano-ada-logo.png"
+    },
+    {
+        "name": "Solana (SOL)",
+        "image": "/assets/images/solana-sol-logo.png"
+    }
+]

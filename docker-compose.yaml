@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  crypto_predict:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
