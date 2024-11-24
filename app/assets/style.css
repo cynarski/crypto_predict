@@ -1,10 +1,13 @@
-*{
+body {
     background-color: #061e44;
+    color: white;
 }
+
 .container {
     text-align: center;
     padding: 20px;
     font-family: Arial, sans-serif;
+    color: white;
 }
 
 .header {
@@ -13,6 +16,13 @@
     margin-bottom: 20px;
     text-align: center;
     color: white;
+}
+
+.learning-heading {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .crypto-container {
@@ -43,18 +53,97 @@
 
 .learning-data {
     display: flex;
-
-}
-
-.right-panel {
-    width: 75%;
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .left-panel {
-    width: 25%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontally center items */
+    justify-content: center; /* Vertically center items */
+    padding: 20px;
+    height: 100%; /* Ensure the panel takes up full height */
+    box-sizing: border-box; /* Include padding in height calculation */
+    background-color: #061e44; /* Match the app background */
 }
 
+
 #crypto-dropdown {
-    width: 80%;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.date-picker-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 4%;
+    width: 100%;
     margin-top: 10px;
+}
+
+.date-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.date-picker {
+    width: 48%;
+}
+
+
+#load-data-button {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#load-data-button:hover {
+    background-color: #0056b3;
+}
+
+
+.right-panel {
+    width: 65%;
+    padding: 20px;
+    font-size: 16px;
+    color: white;
+}
+
+
+#crypto-dropdown .Select-control {
+    color: black;
+    background-color: white;
+}
+
+#crypto-dropdown .Select-menu {
+    color: black;
+    background-color: white;
+}
+
+#crypto-dropdown .Select-option {
+    color: black;
+    background-color: white;
+}
+
+#crypto-dropdown .Select-option.is-selected {
+    background-color: #e0e0e0;
+    color: black;
+}
+
+#crypto-dropdown .Select-placeholder {
+    color: gray;
+}
+
+#crypto-dropdown .Select-arrow-zone {
+    color: black;
 }

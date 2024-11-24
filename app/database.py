@@ -3,7 +3,7 @@ import sqlite3
 from datetime import datetime
 
 def fetch_crypto_data(ticker):
-    data = yf.download(ticker, start="2010-01-01")
+    data = yf.download(ticker, start="2010-01-01", end="2024-10-31")
     return data
 
 def save_to_sqlite(data, db_name, table_name):
