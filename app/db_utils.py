@@ -16,7 +16,7 @@ def map_crypto_to_table(symbol):
         "Cardano (ADA)": "ADA_USD",
         "Solana (SOL)": "SOL_USD"
     }
-    return mapping.get(symbol, symbol)  # Return the mapped name or the symbol itself if no mapping exists
+    return mapping.get(symbol, symbol)
 
 def fetch_crypto_data(symbol, start_date, end_date, db_path="crypto_data.db"):
     """
@@ -28,12 +28,10 @@ def fetch_crypto_data(symbol, start_date, end_date, db_path="crypto_data.db"):
     :param db_path: The path to the SQLite database file (default: "crypto_data.db").
     :return: A Pandas DataFrame containing the query results.
     """
-    # Map the symbol to the correct table name
     table_name = map_crypto_to_table(symbol)
 
     conn = sqlite3.connect(db_path)
 
-    # Enclose the table name in double quotes to handle special characters
     query = f"""
         SELECT * 
         FROM "{table_name}"
@@ -41,7 +39,6 @@ def fetch_crypto_data(symbol, start_date, end_date, db_path="crypto_data.db"):
     """
 
     try:
-        # Execute the query and parse dates
         data = pd.read_sql_query(query, conn, parse_dates=["Date"])
         data.set_index("Date", inplace=True)
     except Exception as e:
