@@ -24,7 +24,13 @@ def register_callbacks(app):
         if data.empty:
             return go.Figure().update_layout(title="No data available for the selected range.")
 
-        fig = go.Figure()
+        fig = go.Figure(
+            layout=go.Layout(
+                plot_bgcolor="#082255",
+                paper_bgcolor="#082255",
+                font=dict(color="white")
+            )
+        )
 
         if "line" in chart_types:
             fig.add_trace(go.Scatter(
@@ -54,3 +60,15 @@ def register_callbacks(app):
         )
 
         return fig
+
+    @app.callback(
+        Output("url", "pathname"),
+        [Input("models-submit-button", "n_clicks")],
+        [State("models-checklist", "value")]
+    )
+    def handle_models_submit(n_clicks, selected_models):
+        if n_clicks > 0:
+            print("Selected models:", selected_models)
+            return "/results/"
+
+        return "/"

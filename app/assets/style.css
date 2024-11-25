@@ -61,12 +61,13 @@ body {
     width: 30%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Horizontally center items */
-    justify-content: center; /* Vertically center items */
+    align-items: center;
+    justify-content: center;
     padding: 20px;
-    height: 100%; /* Ensure the panel takes up full height */
-    box-sizing: border-box; /* Include padding in height calculation */
-    background-color: #061e44; /* Match the app background */
+    margin-top: 100px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #061e44;
 }
 
 
@@ -77,8 +78,8 @@ body {
 
 .date-picker-container {
     display: flex;
-    justify-content: space-between;
-    gap: 4%;
+    justify-content: center;
+    gap: 20%;
     width: 100%;
     margin-top: 10px;
 }
@@ -87,12 +88,22 @@ body {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .date-picker {
     width: 48%;
 }
 
+.dash-date-picker {
+    width: 150px; /* Adjust width to fit your layout */
+}
+
+.date-picker-container > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 #load-data-button {
     background-color: #007BFF;
@@ -146,4 +157,8 @@ body {
 
 #crypto-dropdown .Select-arrow-zone {
     color: black;
+}
+
+#crypto-graph .dash-graph {
+    background-color: #082255;
 }

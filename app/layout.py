@@ -1,8 +1,11 @@
 from dash import dcc, html
 
-def create_layout(cryptos):
+def create_title_and_crypto_icons(cryptos):
+    """
+    Creates the title and the list of cryptocurrency icons.
+    """
     return html.Div(
-        className="container",
+        className="crypto-section",
         children=[
             html.H1("Crypto Predictor", className="header"),
             html.Div(
@@ -14,6 +17,16 @@ def create_layout(cryptos):
                     ]) for crypto in cryptos
                 ]
             ),
+        ]
+    )
+
+def create_data_selection_section(cryptos):
+    """
+    Creates the section for selecting data for learning models.
+    """
+    return html.Div(
+        className="learning-data-section",
+        children=[
             html.H2("Select data for learning models", className="learning-heading"),
             html.Div(
                 className="learning-data",
@@ -74,5 +87,39 @@ def create_layout(cryptos):
                     ),
                 ]
             ),
+        ]
+    )
+
+def select_models():
+    return html.Div(
+        className="models_selector",
+        children=[
+            html.H1("Select Models to predict"),
+            dcc.Checklist(
+                id="models-checklist",
+                options=[
+                    {"label": "Arima", "value": "Arima"},
+                    {"label": "Prophet", "value": "Prophet"},
+                    {"label": "LSTM", "value": "LSTM"},
+                    {"label": "GRU", "value": "GRU"}
+                ],
+                value=[],
+                labelStyle={"display": "inline-block", "marginRight": "10px"},
+            ),
+            html.Button("Go to results", id="models-submit-button", n_clicks=0),
+            dcc.Location(id="url", refresh=True),
+        ]
+    )
+
+def create_layout(cryptos):
+    """
+    Combines the two main sections into the full layout.
+    """
+    return html.Div(
+        className="container",
+        children=[
+            create_title_and_crypto_icons(cryptos),
+            create_data_selection_section(cryptos),
+            select_models()
         ]
     )
