@@ -48,3 +48,4 @@ class MyArima:
 
         predictions_df = pd.DataFrame(predicted_results, index=forecast_dates, columns=['Predicted'])
         return predictions_df
+
