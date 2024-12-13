@@ -34,7 +34,7 @@ class MyArima:
         train, _ = self.prepare_data(df)
         differenced = self.difference(train)
         self.history = list(train)
-        model = ARIMA(differenced, order=(5, 0, 1))
+        model = ARIMA(differenced, order=(5, 1, 1))
         self.model_fit = model.fit()
 
     def predict(self, forecast_length, forecast_dates):

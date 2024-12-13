@@ -9,11 +9,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-df = yf.download('BTC-USD', start='2019-01-01', end='2021-12-31')
+df = yf.download('BTC-USD', start='2021-01-01', end='2021-12-31')
 data = df[['Close']].values
 
-# plt.plot(df.index, data)
-# plt.xlabel()
+# plt.figure(figsize=(14,5))
+# plt.plot(df.index, data, label="Bitcoin")
+# plt.title("Dane treningowe")
+# plt.ylabel('Cena w dolarach')
+# plt.legend()
 # plt.show()
 
 gru_model = MyGRU(epochs=5, look_back=10)
@@ -42,7 +45,7 @@ prophet_model.create_model()
 prophet_model.fit(df)
 predictions = prophet_model.predict(periods)
 
-arima_model = MyArima(interval=10)
+arima_model = MyArima(interval=180)
 arima_model.fit(df)
 forecast_dates = pd.date_range(start='2022-01-01', end='2022-01-31')
 forecast_length = len(forecast_dates)
