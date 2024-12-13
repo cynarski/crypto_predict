@@ -30,7 +30,6 @@ class MyLSTM:
         self.model.add(LSTM(units=self.hidden_dim // 4))
         self.model.add(Dense(25))
         self.model.add(Dense(1))
-        self.model.summary()
         self.model.compile(loss='mean_squared_error', optimizer='adam')
 
     def fit(self, data: np.ndarray) -> None:
