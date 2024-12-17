@@ -4,6 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import GRU, Dense, Dropout
 
+import random
 class MyGRU:
     sc_in = MinMaxScaler(feature_range=(0, 1))
     sc_out = MinMaxScaler(feature_range=(0, 1))
@@ -41,11 +42,18 @@ class MyGRU:
         Y_train, Y_val = Y[:train_size], Y[train_size:]
         self.model.fit(X_train, Y_train, epochs=self.epochs, batch_size=64, validation_data=(X_val, Y_val), verbose=1)
 
-    def predict(self, data: np.ndarray, actual_prices: int):
+    def predict(self, data: np.ndarray, actual_prices: int, noise_level: float = 0.0, noise_start: int = None):
 
         inputs = data[len(data) - actual_prices - self.look_back:]
         inputs = inputs.reshape(-1, 1)
         inputs = self.sc_in.transform(inputs)
+
+        if noise_level > 0 and noise_start is not None:
+            noise_start = max(0, noise_start)
+            for idx in range(noise_start, len(inputs)):
+                noise = np.random.normal(0, noise_level)
+                if not random.randint(0,2):
+                    inputs[idx] += noise
 
         X_test = []
         for i in range(self.look_back, len(inputs)):
