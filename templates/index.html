@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <h1 class="header">Crypto Predictor</h1>
+    <div class="crypto-container">
+        {% for crypto in cryptos %}
+        <div class="crypto-item">
+            <img src="{{ crypto.image }}" alt="{{ crypto.name }}">
+            <h3>{{ crypto.name }}</h3>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="data-title">Select data for learning models</h2>
+
+    <!-- Dodajemy formularz, ale zachowujemy istniejący wygląd -->
+    <form action="{{ url_for('training_models') }}" method="POST">
+        <div class="learning-data">
+            <div class="left-panel">
+                <p>Select currency</p>
+                <select id="ticker" name="ticker" required>
+                    <option value="" disabled selected>Select...</option>
+                    {% for crypto in cryptos %}
+                    <option value="{{ crypto.code }}">{{ crypto.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Select start date:</label>
+                <input type="date" id="start-date" placeholder="Start Date" name="train_start_date" required>
+
+                <label>Select end date:</label>
+                <input type="date" id="end-date" placeholder="End Date" name="train_end_date" required>
+
+                <button type="button" id="load_data">Load Data</button>
+            </div>
+
+            <div class="right-panel">
+                <div id="chart" style="display:none;"></div>
+            </div>
+        </div>
+        
+        <h2 class="data-title">Select models and forecast period</h2>
+
+        <div class="models">
+            {% for model in models %}
+            <div>
+                <input type="checkbox" id="{{ model }}" name="models" value="{{ model }}">
+                <label for="{{ model }}">{{ model }}</label>
+            </div>
+            {% endfor %}
+
+            <div>
+                <label>Select prediction start date:</label>
+                <input type="date" id="predict-start-date" placeholder="Start Date" name="predict_start_date" required>
+
+                <label>Select prediction end date:</label>
+                <input type="date" id="predict-end-date" placeholder="End Date" name="predict_end_date" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('load_data').addEventListener('click', async () => {
+            const ticker = document.getElementById('ticker').value;
+            const start_date = document.getElementById('start-date').value;
+            const end_date = document.getElementById('end-date').value;
+
+            const response = await fetch('/get_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ticker, start_date, end_date })
+            });
+
+            const data = await response.json();
+            const chartDiv = document.getElementById('chart');
+            chartDiv.style.display = 'block';
+
+            const graphJson = JSON.parse(data.graph_json);
+
+            // Ustaw wykres z szerokością i wysokością dynamicznie dopasowaną do kontenera
+            Plotly.newPlot(chartDiv, graphJson.data, graphJson.layout, { responsive: true });
+        });
+
+    </script>
+
+</body>
+</html>

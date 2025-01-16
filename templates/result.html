@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+    <title>Results</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<body>
+    <h1>Prediction Results</h1>
+
+    <div class="grid-container">
+        <!-- Pierwszy rząd: Wykresy liniowe obok siebie -->
+        <div class="grid-item">
+            <h2>Main Predictions</h2>
+            <div id="plot_main" style="width: 100%; height: 500px;"></div>
+        </div>
+        <div class="grid-item">
+            <h2>Predictions with Bias Adjustment</h2>
+            <div id="plot_bias" style="width: 100%; height: 500px;"></div>
+        </div>
+
+        <!-- Drugi rząd: Wykresy słupkowe obok siebie -->
+        <div class="grid-item">
+            <h2>RMSE for Models</h2>
+            <div id="plot_rmse" style="width: 100%; height: 400px;"></div>
+        </div>
+        <div class="grid-item">
+            <h2>Bias for Models</h2>
+            <div id="plot_bias_bar" style="width: 100%; height: 400px;"></div>
+        </div>
+    </div>
+
+    <a href="/" class="button">Go Back</a>
+    <script>
+        var graphDataMain = {{ graph_json_main | safe }};
+        var graphDataBias = {{ graph_json_bias | safe }};
+        var graphDataRMSE = {{ graph_json_rmse | safe }};
+        var graphDataBiasBar = {{ graph_json_bias_bar | safe }};
+
+        Plotly.newPlot('plot_main', graphDataMain, graphDataMain.layout);
+        Plotly.newPlot('plot_bias', graphDataBias, graphDataBias.layout);
+        Plotly.newPlot('plot_rmse', graphDataRMSE, graphDataRMSE.layout);
+        Plotly.newPlot('plot_bias_bar', graphDataBiasBar, graphDataBiasBar.layout);
+    </script>
+</body>
+</html>

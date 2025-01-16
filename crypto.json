@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Bitcoin (BTC)",
+        "image": "/static/images/bitcoin-btc-logo.png",
+        "code": "BTC-USD"
+    },
+    {
+        "name": "Ethereum (ETH)",
+        "image": "/static/images/ethereum-eth-logo.png",
+        "code": "ETH-USD"
+    },
+    {
+        "name": "Binance Coin (BNB)",
+        "image": "/static/images/binance-coin-bnb-logo.png",
+        "code": "BNB-USD"
+    },
+    {
+        "name": "Cardano (ADA)",
+        "image": "/static/images/cardano-ada-logo.png",
+        "code": "ADA-USD"
+    },
+    {
+        "name": "Solana (SOL)",
+        "image": "/static/images/solana-sol-logo.png",
+        "code": "SOL-USD"
+    },
+    {
+        "name": "Tether (USTD)",
+        "image": "/static/images/tether-usdt-logo.png",
+        "code": "USTD-USD"
+    },
+    {
+        "name": "Dogecoin (DOGE)",
+        "image": "/static/images/dogecoin-doge-logo.png",
+        "code": "DOGE-USD"
+    }
+]

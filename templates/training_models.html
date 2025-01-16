@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Training in Progress</h1>
+    <div id="log-container"></div>
+    <div id="progress-bar" style="width: 100%; background-color: #f3f3f3; border: 1px solid #ccc;">
+        <div id="progress" style="width: 0%; background-color: #4caf50; height: 20px;"></div>
+    </div>
+    <a href="{{ url_for('index') }}">Powrót do strony głównej</a>
+</body>
+
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>
+    const socket = io();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Retrieve data passed to the template
+        const data = {
+            ticker: "{{ selected_currency }}",
+            train_start_date: "{{ train_start_date }}",
+            train_end_date: "{{ train_end_date }}",
+            predict_start_date: "{{ predict_start_date }}",
+            predict_end_date: "{{ predict_end_date }}",
+            models: {{ selected_models | tojson }}
+        };
+
+        // Send data to SocketIO
+        socket.emit('start_training', data);
+
+        // Handle logs
+        socket.on('log', (data) => {
+            const logContainer = document.getElementById('log-container');
+            const logMessage = document.createElement('p');
+            logMessage.textContent = data.message;
+            logContainer.appendChild(logMessage);
+        });
+
+        // Handle progress bar
+        socket.on('progress', (data) => {
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = `${data.progress}%`;
+            progressBar.textContent = `${data.progress}%`;
+        });
+
+        // Handle redirection
+        socket.on('redirect', (data) => {
+            window.location.href = data.url;
+        });
+    });
+</script>
+
+</html>
